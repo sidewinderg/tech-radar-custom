@@ -71,6 +71,43 @@ function init(h, w) {
         anglesInc();
     }
 
+    //Add SVG Text Element Attributes
+    var textLabels = radar.selectAll("text")
+        .data(radar_arcs.arcs)
+        .enter();
+
+        textLabels
+        .append("text")
+        .attr("x", function(d,i) {
+            return (w/2)-(arcRadius/2)+(arcRadius*d.r);
+        })
+        .attr("y", function(d) {
+            return h/2+5;
+        })
+        .text(function(d) {
+            return d.name;
+        })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "12px")
+        .attr("fill", "black");
+
+        textLabels
+        .append("text")
+        .attr("x", function(d,i) {
+            return (w/2)+(arcRadius/4)-(arcRadius*d.r);
+        })
+        .attr("y", function(d) {
+            return h/2+5;
+        })
+        .text(function(d) {
+            return d.name;
+        })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", "12px")
+        .attr("fill", "black");
+
+
+
     //Quadrant Ledgends
     var radar_quadrant_ctr = 1;
     var quadrantFontSize = 18;
