@@ -1,11 +1,24 @@
 function init(h, w) {
-    d3.select('#title').text(document.title);
+    //Append title
+
+    var titleArea = d3.select("#pageTitle").append("svg")
+        .attr("font-family", "sans-serif")
+        .attr("width", w)
+        .attr("height", 25);
+
+    titleArea.append("text")
+        .attr("x", (w / 2))
+        .attr("y", 20)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .style("text-decoration", "underline")
+        .text(document.title);
 
     //Radar canvas and initial settings
-    var radar = d3.select("body").append("svg")
-        .attr("width", 1200)
-        .attr("height", 1200);
-
+    var radar = d3.select("#radar").append("svg")
+        .attr("font-family", "sans-serif")
+        .attr("width", w)
+        .attr("height", h);
     var outerArc = d3.arc()
         .innerRadius(1)
         .outerRadius(5)
@@ -71,42 +84,35 @@ function init(h, w) {
         anglesInc();
     }
 
+    function textAttrs(orientation) {
+        return {
+            x: function(d) {
+                return (w / 2) + (orientation) * (arcRadius / ((orientation + 1) + 2)) - (orientation) * (arcRadius * d.r);
+            },
+            y: ((h / 2) + 5),
+            fontFamily: "sans-serif",
+            fontSize: "12px",
+            strokewidth: 1,
+            text: function(d) {
+                return d.name;
+            }
+
+        };
+    }
+
     //Add SVG Text Element Attributes
     var textLabels = radar.selectAll("text")
         .data(radar_arcs.arcs)
         .enter();
 
-        textLabels
-        .append("text")
-        .attr("x", function(d,i) {
-            return (w/2)-(arcRadius/2)+(arcRadius*d.r);
-        })
-        .attr("y", function(d) {
-            return h/2+5;
-        })
-        .text(function(d) {
-            return d.name;
-        })
-        .attr("font-family", "sans-serif")
-        .attr("font-size", "12px")
-        .attr("fill", "black");
 
-        textLabels
-        .append("text")
-        .attr("x", function(d,i) {
-            return (w/2)+(arcRadius/4)-(arcRadius*d.r);
-        })
-        .attr("y", function(d) {
-            return h/2+5;
-        })
-        .text(function(d) {
-            return d.name;
-        })
-        .attr("font-family", "sans-serif")
-        .attr("font-size", "12px")
-        .attr("fill", "black");
-
-
+    for (i = -1; i < 2; i = i + 2) {
+        textLabels.append("text")
+            .attrs(textAttrs(i))
+            .text(function(d) {
+                return d.name;
+            });
+    }
 
     //Quadrant Ledgends
     var radar_quadrant_ctr = 1;
