@@ -1,30 +1,32 @@
 //This is the title for your window tab, and your Radar
 document.title = "Technology Radar Test";
 
-var h = window.innerHeight;
-var w = window.innerWidth;
+var h = 800;
+var w = 800;
 var minSize = 100;
 var maxSize = minSize ;
 var boxHeight =60;
 var boxWidth = 150;
 var boxMargin = 3;
+var arcRadius = 80;
+var arcWidth = arcRadius*4;
 
 //This is the concentic circles that want on your radar
 var radar_arcs = {
     'arcs': [{
-            'r': 500,
+            'r': 4,
             'name': 'Hold',
             'color': '#eaeaea'
         }, {
-            'r': 400,
+            'r': 3.2,
             'name': 'Assess',
             'color': '#dadada'
         }, {
-            'r': 250,
+            'r': 2,
             'name': 'Trial',
             'color': '#cacaca'
         }, {
-            'r': 125,
+            'r': 1,
             'name': 'Adopt',
             'color': '#bababa'
         }
